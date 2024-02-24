@@ -1,0 +1,30 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: train-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: train-container
+        imagePullPolicy: Never
+        image: containersoga/trainmodelsample:v5
+        command: ["python3",  "train.py"]
+        env:
+        - name: MODEL_DIR
+          value: "/trainedmodel"
+        - name: MODEL_FILE
+          value: "clf.joblib"
+        - name: METADATA_FILE
+          value: "metadata.json"
+        volumeMounts:
+            - name: modeloutput
+              mountPath: /trainedmodel
+      restartPolicy: Never
+      volumes:
+        - persistentVolumeClaim:
+              claimName: traindemo-pvc
+              readOnly: false
+          name: modeloutput
+  backoffLimit: 0
+  

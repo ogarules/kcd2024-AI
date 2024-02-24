@@ -1,0 +1,22 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: digitalchallengers-opt-hpa-dgcm
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1beta1
+    kind: Deployment
+    name: digitalchallengers-opt-deployment
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+    - type: Object
+      object:
+        describedObject:
+          kind: Service
+          name: digitalchallengers-opt-deployment 
+        metric: 
+          name: DCGM_FI_DEV_MEM_COPY_UTIL
+        target:
+          averageValue: 70
+          type: AverageValue

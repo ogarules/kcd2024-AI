@@ -1,0 +1,8 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: vsphere-sc-sna
+provisioner: csi.vsphere.vmware.com
+parameters:
+  datastoreurl: "ds:///vmfs/volumes/vsan:529c9fd4d68b174b-1af2d7a4b1b22457/"
+  storagepolicyname: "vSAN-SNA MINIO"

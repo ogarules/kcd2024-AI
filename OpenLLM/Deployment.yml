@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: digitalchallengers-opt-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: digitalchallengers-opt
+  template:
+    metadata:
+      labels:
+        app: digitalchallengers-opt
+    spec:
+      containers:
+        - name: digitalchallengersopt
+          image: faceopt:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: digitalchallengers-opt-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: digitalchallengers-opt
+  ports:
+    - name: http
+      port: 8081
+      targetPort: 3000         
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: digitalchallengers-opt-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: digitalchallengers-opt-deployment
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 60      
