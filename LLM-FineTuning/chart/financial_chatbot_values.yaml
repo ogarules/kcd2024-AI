@@ -20,8 +20,7 @@ metadata:
   namespace: kubeflow
 
 secret:
-  #encodedToken: aGZfQUJDREVGRwo=
-  encodedToken: aGZfY2JSb1B1c2pzbXRGTExwY1J1YWxNWnZMVVN1Zk9zTEViUA==
+  encodedToken: aGZfQUJDREVGRwo=
 image:
  name: intel/ai-workflows  # Specify the image name that was pushed to docker hub or copied to the nodes
  tag: torch-2.0.1-huggingface-multinode-py3.9  # Specify the image tag that was pushed to docker hub or copied to the nodes
